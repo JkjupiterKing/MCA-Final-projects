@@ -18,7 +18,7 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class purchaseorders {
+public class PurchaseOrders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

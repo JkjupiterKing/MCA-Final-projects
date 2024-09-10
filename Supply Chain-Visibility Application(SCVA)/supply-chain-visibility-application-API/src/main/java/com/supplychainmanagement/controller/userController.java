@@ -12,105 +12,81 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/users")
 @CrossOrigin
-public class userController {
+public class UserController {
 
     @Autowired
     private UserRepo userRepository;
 
-    @GetMapping("/getAllUsers")
+    // Get all users
+    @GetMapping("/all")
     public ResponseEntity<List<User>> getAllUsers() {
-        try {
-            List<User> userList = userRepository.findAll();
-
-            if (userList.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-
-            return new ResponseEntity<>(userList, HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        List<User> users = userRepository.findAll();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @GetMapping("/getUserById/{id}")
+    // Get a single user by id
+    @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        Optional<User> userData = userRepository.findById(id);
-
-        return userData.map(user ->
-                        new ResponseEntity<>(user, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
-    @PostMapping("/addUser")
-    public ResponseEntity<User> addUser(@RequestBody User user) {
-        try {
-            // Check for existing username or email
-            if (userRepository.findByUsername(user.getUsername()) != null) {
-                return new ResponseEntity<>(HttpStatus.CONFLICT);
-            }
-            if (userRepository.findByEmail(user.getEmail()) != null) {
-                return new ResponseEntity<>(HttpStatus.CONFLICT);
-            }
-
-            // Encode the password using Base64
-            String encodedPassword = Base64.getEncoder().encodeToString(user.getPassword().getBytes());
-            user.setPassword(encodedPassword);
-
-            User savedUser = userRepository.save(user);
-            return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @PutMapping("/updateUserById/{id}")
-    public ResponseEntity<User> updateUserById(@PathVariable Long id, @RequestBody  User user) {
-        Optional<User> oldUserData = userRepository.findById(id);
-
-        if (oldUserData.isPresent()) {
-            User updatedUser = oldUserData.get();
-            updatedUser.setUsername(user.getUsername());
-            updatedUser.setEmail(user.getEmail());
-            updatedUser.setPassword(Base64.getEncoder().encodeToString(user.getPassword().getBytes())); // Encode password
-
-            User savedUser = userRepository.save(updatedUser);
-            return new ResponseEntity<>(savedUser, HttpStatus.OK);
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            return new ResponseEntity<>(user.get(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    //find user by username
-    @GetMapping("/getUserByUsername/{username}")
+    // Create a new user
+    @PostMapping("/addUser")
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        // Print user object to console for debugging
+        System.out.println("Received user data: " + user);
+        // Encode the password (base64 encoding example, you might want to use a more secure hashing algorithm)
+        String encodedPassword = Base64.getEncoder().encodeToString(user.getPassword().getBytes());
+        user.setPassword(encodedPassword);
+        User createdUser = userRepository.save(user);
+        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+    }
+
+    // Update an existing user
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
+        if (!userRepository.existsById(id)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        user.setId(id);
+        // Optionally, encode the password if it's being updated
+        if (user.getPassword() != null) {
+            user.setPassword(encodePassword(user.getPassword()));
+        }
+        User updatedUser = userRepository.save(user);
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+    }
+
+    // Delete a user
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        if (!userRepository.existsById(id)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        userRepository.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    // Get a user by username
+    @GetMapping("/username/{username}")
     public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
-        User user = userRepository.findByUsername(username);
-
-        return user != null ? new ResponseEntity<>(user, HttpStatus.OK) :
-                new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    // find user by email
-    @GetMapping("/getUserByEmail/{email}")
-    public ResponseEntity<User> getUserByEmail(@PathVariable String email) {
-        User user = userRepository.findByEmail(email);
-
-        return user != null ? new ResponseEntity<>(user, HttpStatus.OK) :
-                new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    @DeleteMapping("/deleteUserById/{id}")
-    public ResponseEntity<HttpStatus> deleteUserById(@PathVariable Long id) {
-        try {
-            if (userRepository.existsById(id)) {
-                userRepository.deleteById(id);
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        User user = userRepository.findByusername(username);
+        if (user != null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-}
 
+    // Method to encode password using Base64
+    private String encodePassword(String password) {
+        return Base64.getEncoder().encodeToString(password.getBytes());
+    }
+}

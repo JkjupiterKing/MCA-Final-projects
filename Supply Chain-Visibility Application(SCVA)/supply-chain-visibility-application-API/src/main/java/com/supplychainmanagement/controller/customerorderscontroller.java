@@ -5,23 +5,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.supplychainmanagement.model.customerorders;
-import com.supplychainmanagement.repo.customerordersrepo;
+import com.supplychainmanagement.model.CustomerOrders;
+import com.supplychainmanagement.repo.CustomerOrdersRepo;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @CrossOrigin
-public class customerorderscontroller {
+public class CustomerOrdersController {
 
     @Autowired
-    private customerordersrepo customerOrdersRepo;
+    private CustomerOrdersRepo customerOrdersRepo;
 
     @GetMapping("/getAllCustomerOrders")
-    public ResponseEntity<List<customerorders>> getAllCustomerOrders() {
+    public ResponseEntity<List<CustomerOrders>> getAllCustomerOrders() {
         try {
-            List<customerorders> customerOrdersList = customerOrdersRepo.findAll();
+            List<CustomerOrders> customerOrdersList = customerOrdersRepo.findAll();
 
             if (customerOrdersList.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -34,8 +34,8 @@ public class customerorderscontroller {
     }
 
     @GetMapping("/getCustomerOrderById/{id}")
-    public ResponseEntity<customerorders> getCustomerOrderById(@PathVariable int id) {
-        Optional<customerorders> customerOrderData = customerOrdersRepo.findById(id);
+    public ResponseEntity<CustomerOrders> getCustomerOrderById(@PathVariable int id) {
+        Optional<CustomerOrders> customerOrderData = customerOrdersRepo.findById(id);
 
         return customerOrderData.map(customerOrder ->
                         new ResponseEntity<>(customerOrder, HttpStatus.OK))
@@ -43,26 +43,27 @@ public class customerorderscontroller {
     }
 
     @PostMapping("/addCustomerOrder")
-    public ResponseEntity<customerorders> addCustomerOrder(@RequestBody customerorders customerOrder) {
+    public ResponseEntity<CustomerOrders> addCustomerOrder(@RequestBody CustomerOrders customerOrder) {
         try {
-            customerorders savedCustomerOrder = customerOrdersRepo.save(customerOrder);
+            CustomerOrders savedCustomerOrder = customerOrdersRepo.save(customerOrder);
             return new ResponseEntity<>(savedCustomerOrder, HttpStatus.CREATED);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PutMapping("/updateCustomerOrderById/{id}")
-    public ResponseEntity<customerorders> updateCustomerOrderById(@PathVariable Integer id, @RequestBody customerorders customerOrder) {
-        Optional<customerorders> oldCustomerOrderData = customerOrdersRepo.findById(id);
+    public ResponseEntity<CustomerOrders> updateCustomerOrderById(@PathVariable Integer id, @RequestBody CustomerOrders customerOrder) {
+        Optional<CustomerOrders> oldCustomerOrderData = customerOrdersRepo.findById(id);
 
         if (oldCustomerOrderData.isPresent()) {
-            customerorders updatedCustomerOrder = oldCustomerOrderData.get();
-            updatedCustomerOrder.setCustomerName(customerOrder.getCustomerName());
-            updatedCustomerOrder.setProductName(customerOrder.getProductName());
+            CustomerOrders updatedCustomerOrder = oldCustomerOrderData.get();
+//            updatedCustomerOrder.setCustomerName(customerOrder.getCustomerName());
+//            updatedCustomerOrder.setProductName(customerOrder.getProductName());
             updatedCustomerOrder.setStatus(customerOrder.getStatus());
 
-            customerorders savedCustomerOrder = customerOrdersRepo.save(updatedCustomerOrder);
+            CustomerOrders savedCustomerOrder = customerOrdersRepo.save(updatedCustomerOrder);
             return new ResponseEntity<>(savedCustomerOrder, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -78,4 +79,20 @@ public class customerorderscontroller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    
+    @GetMapping("/getCustomerOrderByCustomerName/{customerName}")
+    public ResponseEntity<List<CustomerOrders>> getCustomerOrderByCustomerName(@PathVariable String customerName) {
+        try{
+            List<CustomerOrders> customerOrderData = customerOrdersRepo.findByCustomerName(customerName);
+
+        if (customerOrderData.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(customerOrderData, HttpStatus.OK);
+    } catch (Exception ex) {
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
 }

@@ -1587,7 +1587,7 @@
   <commands xmi:id="_LItsxzeeEe-kv-9kgpotng" elementId="org.eclipse.linuxtools.docker.ui.commands.openInHierarchyView" commandName="Open Image Hierarchy" description="Open the Docker image Hierarchy view" category="_LInmEzeeEe-kv-9kgpotng"/>
   <commands xmi:id="_LItsyDeeEe-kv-9kgpotng" elementId="org.eclipse.egit.ui.RepositoriesViewConfigurePush" commandName="Configure Push..." category="_LIm_HDeeEe-kv-9kgpotng"/>
   <commands xmi:id="_LItsyTeeEe-kv-9kgpotng" elementId="org.eclipse.ui.edit.findIncrementalReverse" commandName="Incremental Find Reverse" description="Incremental find reverse" category="_LIm_AzeeEe-kv-9kgpotng"/>
-  <commands xmi:id="_LIuTwDeeEe-kv-9kgpotng" elementId="org.eclipse.epp.mpc.ui.command.importFavoritesWizard" commandName="Import Marketplace Favorites" description="Import another user's Marketplace Favorites List" category="_LInmEzeeEe-kv-9kgpotng">
+  <commands xmi:id="_LIuTwDeeEe-kv-9kgpotng" elementId="org.eclipse.epp.mpc.ui.command.importFavoritesWizard" commandName="Import Marketplace Favorites" description="Import another admin's Marketplace Favorites List" category="_LInmEzeeEe-kv-9kgpotng">
     <parameters xmi:id="_LIuTwTeeEe-kv-9kgpotng" elementId="favoritesUrl" name="favoritesUrl"/>
   </commands>
   <commands xmi:id="_LIuTwjeeEe-kv-9kgpotng" elementId="org.eclipse.ant.ui.antShortcut.run" commandName="Run Ant Build" description="Run Ant Build" category="_LIm_GjeeEe-kv-9kgpotng"/>
@@ -1919,7 +1919,7 @@
   <commands xmi:id="_LI0aazeeEe-kv-9kgpotng" elementId="org.eclipse.tm4e.languageconfiguration.removeBlockCommentCommand" commandName="Remove Block Comment" category="_LIm_AjeeEe-kv-9kgpotng"/>
   <commands xmi:id="_LI0abDeeEe-kv-9kgpotng" elementId="org.eclipse.egit.ui.team.PushTags" commandName="Push Tags..." category="_LIm_HDeeEe-kv-9kgpotng"/>
   <commands xmi:id="_LI0abTeeEe-kv-9kgpotng" elementId="org.eclipse.egit.ui.ContinueRebase" commandName="Continue Rebase" category="_LIm_HDeeEe-kv-9kgpotng"/>
-  <commands xmi:id="_LI0abjeeEe-kv-9kgpotng" elementId="org.eclipse.help.ui.closeTray" commandName="Close User Assistance Tray" description="Close the user assistance tray containing context help information and cheat sheets." category="_LIm_EzeeEe-kv-9kgpotng"/>
+  <commands xmi:id="_LI0abjeeEe-kv-9kgpotng" elementId="org.eclipse.help.ui.closeTray" commandName="Close User Assistance Tray" description="Close the admin assistance tray containing context help information and cheat sheets." category="_LIm_EzeeEe-kv-9kgpotng"/>
   <commands xmi:id="_LI0abzeeEe-kv-9kgpotng" elementId="org.eclipse.egit.ui.history.CreatePatch" commandName="Create Patch..." category="_LInmEzeeEe-kv-9kgpotng"/>
   <commands xmi:id="_LI0acDeeEe-kv-9kgpotng" elementId="org.eclipse.debug.ui.commands.Resume" commandName="Resume" description="Resume" category="_LIm_GjeeEe-kv-9kgpotng"/>
   <commands xmi:id="_LI0acTeeEe-kv-9kgpotng" elementId="org.eclipse.linuxtools.docker.ui.commands.restartContainers" commandName="Res&amp;tart" description="Restart selected containers" category="_LInmEzeeEe-kv-9kgpotng"/>

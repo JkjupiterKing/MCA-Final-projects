@@ -5,23 +5,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.supplychainmanagement.model.purchaseorders;
-import com.supplychainmanagement.repo.purchaseordersrepo;
+import com.supplychainmanagement.model.PurchaseOrders;
+import com.supplychainmanagement.repo.PurchaseOrdersRepo;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @CrossOrigin
-public class purchaseorderscontroller {
+public class PurchaseOrdersController {
 
     @Autowired
-    private purchaseordersrepo purchaseOrdersRepository;
+    private PurchaseOrdersRepo purchaseOrdersRepository;
 
     @GetMapping("/getAllPurchaseOrders")
-    public ResponseEntity<List<purchaseorders>> getAllPurchaseOrders() {
+    public ResponseEntity<List<PurchaseOrders>> getAllPurchaseOrders() {
         try {
-            List<purchaseorders> purchaseOrdersList = purchaseOrdersRepository.findAll();
+            List<PurchaseOrders> purchaseOrdersList = purchaseOrdersRepository.findAll();
 
             if (purchaseOrdersList.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -34,8 +34,8 @@ public class purchaseorderscontroller {
     }
 
     @GetMapping("/getPurchaseOrderById/{id}")
-    public ResponseEntity<purchaseorders> getPurchaseOrderById(@PathVariable Long id) {
-        Optional<purchaseorders> purchaseOrderData = purchaseOrdersRepository.findById(id);
+    public ResponseEntity<PurchaseOrders> getPurchaseOrderById(@PathVariable Long id) {
+        Optional<PurchaseOrders> purchaseOrderData = purchaseOrdersRepository.findById(id);
 
         return purchaseOrderData.map(purchaseOrder ->
                         new ResponseEntity<>(purchaseOrder, HttpStatus.OK))
@@ -43,9 +43,9 @@ public class purchaseorderscontroller {
     }
 
     @PostMapping("/addPurchaseOrder")
-    public ResponseEntity<purchaseorders> addPurchaseOrder(@RequestBody purchaseorders purchaseOrder) {
+    public ResponseEntity<PurchaseOrders> addPurchaseOrder(@RequestBody PurchaseOrders purchaseOrder) {
         try {
-            purchaseorders savedPurchaseOrder = purchaseOrdersRepository.save(purchaseOrder);
+            PurchaseOrders savedPurchaseOrder = purchaseOrdersRepository.save(purchaseOrder);
             return new ResponseEntity<>(savedPurchaseOrder, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -53,17 +53,17 @@ public class purchaseorderscontroller {
     }
 
     @PutMapping("/updatePurchaseOrderById/{id}")
-    public ResponseEntity<purchaseorders> updatePurchaseOrderById(@PathVariable Long id, @RequestBody purchaseorders purchaseOrder) {
-        Optional<purchaseorders> oldPurchaseOrderData = purchaseOrdersRepository.findById(id);
+    public ResponseEntity<PurchaseOrders> updatePurchaseOrderById(@PathVariable Long id, @RequestBody PurchaseOrders purchaseOrder) {
+        Optional<PurchaseOrders> oldPurchaseOrderData = purchaseOrdersRepository.findById(id);
 
         if (oldPurchaseOrderData.isPresent()) {
-            purchaseorders updatedPurchaseOrder = oldPurchaseOrderData.get();
+            PurchaseOrders updatedPurchaseOrder = oldPurchaseOrderData.get();
             updatedPurchaseOrder.setItem(purchaseOrder.getItem());
             updatedPurchaseOrder.setQuantity(purchaseOrder.getQuantity());
             updatedPurchaseOrder.setSupplier(purchaseOrder.getSupplier());
             updatedPurchaseOrder.setPrice(purchaseOrder.getPrice());
 
-            purchaseorders savedPurchaseOrder = purchaseOrdersRepository.save(updatedPurchaseOrder);
+            PurchaseOrders savedPurchaseOrder = purchaseOrdersRepository.save(updatedPurchaseOrder);
             return new ResponseEntity<>(savedPurchaseOrder, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

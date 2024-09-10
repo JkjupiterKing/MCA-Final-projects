@@ -5,23 +5,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.supplychainmanagement.model.supplier;
-import com.supplychainmanagement.repo.supplierrepo;
+import com.supplychainmanagement.model.Supplier;
+import com.supplychainmanagement.repo.SupplierRepo;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @CrossOrigin
-public class suppliercontroller {
+public class SupplierController {
 
     @Autowired
-    private supplierrepo supplierRepository;
+    private SupplierRepo supplierRepository;
 
     @GetMapping("/getAllSuppliers")
-    public ResponseEntity<List<supplier>> getAllSuppliers() {
+    public ResponseEntity<List<Supplier>> getAllSuppliers() {
         try {
-            List<supplier> supplierList = supplierRepository.findAll();
+            List<Supplier> supplierList = supplierRepository.findAll();
 
             if (supplierList.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -34,18 +34,18 @@ public class suppliercontroller {
     }
 
     @GetMapping("/getSupplierById/{id}")
-    public ResponseEntity<supplier> getSupplierById(@PathVariable Long id) {
-        Optional<supplier> supplierData = supplierRepository.findById(id);
+    public ResponseEntity<Supplier> getSupplierById(@PathVariable Long id) {
+        Optional<Supplier> supplierData = supplierRepository.findById(id);
 
-        return supplierData.map(supplier ->
-                        new ResponseEntity<>(supplier, HttpStatus.OK))
+        return supplierData.map(Supplier ->
+                        new ResponseEntity<>(Supplier, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/addSupplier")
-    public ResponseEntity<supplier> addSupplier(@RequestBody supplier supplier) {
+    public ResponseEntity<Supplier> addSupplier(@RequestBody Supplier supplier) {
         try {
-            supplier savedSupplier = supplierRepository.save(supplier);
+            Supplier savedSupplier = supplierRepository.save(supplier);
             return new ResponseEntity<>(savedSupplier, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -53,18 +53,18 @@ public class suppliercontroller {
     }
 
     @PutMapping("/updateSupplierById/{id}")
-    public ResponseEntity<supplier> updateSupplierById(@PathVariable Long id, @RequestBody supplier updatedSupplier) {
-        Optional<supplier> oldSupplierData = supplierRepository.findById(id);
+    public ResponseEntity<Supplier> updateSupplierById(@PathVariable Long id, @RequestBody Supplier updatedSupplier) {
+        Optional<Supplier> oldSupplierData = supplierRepository.findById(id);
 
         if (oldSupplierData.isPresent()) {
-            supplier existingSupplier = oldSupplierData.get();
+            Supplier existingSupplier = oldSupplierData.get();
             existingSupplier.setName(updatedSupplier.getName());
             existingSupplier.setContactPerson(updatedSupplier.getContactPerson());
             existingSupplier.setEmail(updatedSupplier.getEmail());
             existingSupplier.setPhone(updatedSupplier.getPhone());
             existingSupplier.setAddress(updatedSupplier.getAddress());
 
-            supplier savedSupplier = supplierRepository.save(existingSupplier);
+            Supplier savedSupplier = supplierRepository.save(existingSupplier);
             return new ResponseEntity<>(savedSupplier, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

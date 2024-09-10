@@ -18,9 +18,9 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class customerorders {
+public class CustomerOrders {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
         private int orderId;
 
         private String customerName;
