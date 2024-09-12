@@ -1,6 +1,7 @@
 // Load the sidenav
-$('#mySidenav').load('../common/sidenav.html');
-const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+$('#mySidenav').load('../../app/user-Sidenav/sidenav.html');
+
+const currentUser = JSON.parse(localStorage.getItem('User'));
 
 document.addEventListener('DOMContentLoaded', function () {
     // Initialize UI with enrolled courses for the current user
@@ -155,9 +156,11 @@ function showResultsInModal(results) {
     const modalBody = document.getElementById('modal-body');
     modalBody.innerHTML = ''; // Clear previous content
 
+    let index = 0;
     results.forEach(result => {
+        index++;
         const resultHtml = `
-        <p><strong>Attempt:</strong> ${result.attemptNumber}</p>
+        <p><strong>Attempt:</strong> ${index}</p>
         <p><strong>Course:</strong> ${result.enrollment.course.courseName}</p>
         <p><strong>Score:</strong> ${result.score}</p>
             <hr>

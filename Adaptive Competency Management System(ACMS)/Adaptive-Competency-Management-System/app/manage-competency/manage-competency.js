@@ -1,7 +1,7 @@
 // Load navBar
-$('#mySidenav').load('../common/sidenav.html');
+$('#mySidenav').load('../../app/user-Sidenav/sidenav.html');
 
-const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+const currentUser = JSON.parse(localStorage.getItem('User'));
 
 document.addEventListener('DOMContentLoaded', function () {
     // Initialize UI with enrolled courses for the current user

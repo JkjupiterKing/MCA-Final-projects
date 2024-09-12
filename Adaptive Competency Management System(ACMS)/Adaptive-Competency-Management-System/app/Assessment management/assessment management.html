@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessment Management</title>
+    <link href="../../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../app/Assessment management/assessment management.css" rel="stylesheet">
+    <link rel="icon" href="../../resources/Images/competence-logo.gif" type="image/x-icon">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidenav" id="mySidenav"></div>
+
+    <!-- Main content -->
+    <div class="main-content">
+        <div class="container mt-5">
+            <h2><b> Add Assessment Questions</b></h2>
+            <br>
+            <!-- Select Course Dropdown and Add New Question Button -->
+            <div class="d-flex align-items-center mb-3">
+                <div class="me-3">
+                    <label for="selectCourse" class="form-label d-inline-block">Select Course</label>
+                    <select class="form-select" id="selectCourse" required>
+                        <option value="" selected disabled>Select a Course</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal" id="add-btn">Add New Question</button>
+            </div>
+            <!-- Questions Table -->
+            <div class="mt-4">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Question Name</th>
+                            <th>Option 1</th>
+                            <th>Option 2</th>
+                            <th>Option 3</th>
+                            <th>Option 4</th>
+                            <th>Answer</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="questionsTableBody">
+                        <!-- Questions will be dynamically inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Add Modal -->
+    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalLabel">Add New Question</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addQuestionForm">
+                        <div class="mb-3">
+                            <label for="addCourse" class="form-label">Course</label>
+                            <select class="form-select" id="addCourse" required>
+                                <option value="" selected disabled>Select a Course</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addQuestionText" class="form-label">Question</label>
+                            <input type="text" class="form-control" id="addQuestionText" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addOption1" class="form-label">Option 1</label>
+                            <input type="text" class="form-control" id="addOption1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addOption2" class="form-label">Option 2</label>
+                            <input type="text" class="form-control" id="addOption2" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addOption3" class="form-label">Option 3</label>
+                            <input type="text" class="form-control" id="addOption3" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addOption4" class="form-label">Option 4</label>
+                            <input type="text" class="form-control" id="addOption4" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addCorrectAnswer" class="form-label">Correct Answer</label>
+                            <input type="text" class="form-control" id="addCorrectAnswer" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="Add-modal-button">Add</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Update Modal -->
+    <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateModalLabel">Update Question</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="updateQuestionForm">
+                        <input type="hidden" id="updateQuestionId">
+                        <div class="mb-3">
+                            <label for="updateQuestionText" class="form-label">Question</label>
+                            <input type="text" class="form-control" id="updateQuestionText" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="updateOption1" class="form-label">Option 1</label>
+                            <input type="text" class="form-control" id="updateOption1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="updateOption2" class="form-label">Option 2</label>
+                            <input type="text" class="form-control" id="updateOption2" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="updateOption3" class="form-label">Option 3</label>
+                            <input type="text" class="form-control" id="updateOption3" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="updateOption4" class="form-label">Option 4</label>
+                            <input type="text" class="form-control" id="updateOption4" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="updateCorrectAnswer" class="form-label">Correct Answer</label>
+                            <input type="text" class="form-control" id="updateCorrectAnswer" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="update-modal-button">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../resources/jquery/jquery-3.7.1.min.js"></script>
+    <script src="../../resources/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../../app/Assessment management/assessment management.js"></script>
+</body>
+</html>

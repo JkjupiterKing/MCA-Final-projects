@@ -1,14 +1,14 @@
-INSERT INTO courses (course_name, description, instructor_id, start_date, end_date, image_url, course_url)
+INSERT INTO courses (course_name, description, image_url, course_url)
 VALUES
-    ('HTML', 'Learn basics of HTML', 1, '2024-08-01', '2024-12-31', '../../resources/Images/html-5.png', '../../resources/course videos/html.mp4'),
-    ('CSS', 'Learn basics of CSS', 2, '2024-09-15', '2024-12-15', '../../resources/Images/css-3.png', '../../resources/course videos/css.mp4'),
-    ('JavaScript', 'Learn JavaScript programming language fundamentals', 3, '2024-07-01', '2024-09-30', '../../resources/Images/js.png', '../../resources/course videos/javascript.mp4'),
-    ('Java Programming', 'Learn Java programming language basics', 4, '2024-10-01', '2025-01-15', '../../resources/Images/java.png', '../../resources/course videos/java.mp4'),
-    ('Software Testing', 'Introduction to software testing principles', 5, '2024-08-15', '2024-11-30', '../../resources/Images/test.png', '../../resources/course videos/software testing.mp4');
+    ('HTML', 'Learn basics of HTML', '../../resources/Images/html-5.png', '../../resources/course videos/html.mp4'),
+    ('CSS', 'Learn basics of CSS', '../../resources/Images/css-3.png', '../../resources/course videos/css.mp4'),
+    ('JavaScript', 'Learn JavaScript programming language fundamentals', '../../resources/Images/js.png', '../../resources/course videos/javascript.mp4'),
+    ('Java Programming', 'Learn Java programming language basics', '../../resources/Images/java.png', '../../resources/course videos/java.mp4'),
+    ('Software Testing', 'Introduction to software testing principles', '../../resources/Images/test.png', '../../resources/course videos/software testing.mp4');
 
 INSERT INTO employees (EMPLOYEE_ID, ADDRESS, BIRTH_DATE, DEPARTMENT, EMAIL, FIRST_NAME, HIRE_DATE, LAST_NAME, PASSWORD, POSITION)
 VALUES 
-(1, '123 Main St', '1990-01-01', 'IT', 'jhon@jk.com', 'John', '2020-01-01', 'Doe', 'YQ==', 'Manager'),
+(1, '123 Main St', '1990-01-01', 'IT', 'jhon@jk.com', 'John', '2020-01-01', 'Doe', 'YQ==', 'Admin'),
 (2, '123 Main St', '1990-01-01', 'IT', 'tom@jk.com', 'Tom', '2020-01-01', 'Doe', 'YQ==', 'Employee');
 
 INSERT INTO Questions (question_text, option_1, option_2, option_3, option_4, correct_answer, type_of_question) VALUES
@@ -24,7 +24,7 @@ INSERT INTO Questions (question_text, option_1, option_2, option_3, option_4, co
 ('Which element is used to represent the transparency of an element in CSS?', 'Hover', 'Opacity', 'Transparent', 'Overlay', 'Opacity', 'CSS'),
 ('What will the following code return: Boolean(10 > 9)?', 'True', 'False', 'NaN', 'Not mentioned', 'True', 'JavaScript'),
 ('Where is the correct place to insert a JavaScript?', 'Both the <head> section and the <body> section are correct', 'The <body> section', 'The <head> section', 'Not mentioned', 'Both the <head> section and the <body> section are correct', 'JavaScript'),
-('What is the correct syntax for referring to an external script called ''xxx.js''?', '<script src="xxx.js">', '<script name="xxx.js">', '<script href="xxx.js">', 'Overlay', '<script src="xxx.js">', 'JavaScript'),
+('What is the correct syntax for referring to an external script called ''xxx.js''?', '< script src="xxx.js" >', '< script name="xxx.js" >', '< script href="xxx.js" >', 'Overlay', '< script src="xxx.js" >', 'JavaScript'),
 ('How do you write ''Hello World'' in an alert box?', 'alert(''Hello World'');', 'msgBox(''Hello World'');', 'alertBox(''Hello World'');', 'msg(''Hello World'');', 'alert(''Hello World'');', 'JavaScript'),
 ('How do you create a function in JavaScript?', 'function myFunction()', 'function:myFunction()', 'function = myFunction()', 'Not mentioned', 'function myFunction()', 'JavaScript'),
 ('Which data type is used to create a variable that should store text?', 'string', 'Txt', 'myString', 'String', 'String', 'Java Programming'),

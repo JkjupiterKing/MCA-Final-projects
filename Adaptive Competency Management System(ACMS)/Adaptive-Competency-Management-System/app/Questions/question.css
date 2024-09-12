@@ -7,6 +7,12 @@
 body {
     font-family: "PT Sans", sans-serif;
 }
+#timer {
+    color: black;
+    font-size: 2rem; 
+    font-weight: bold;
+    font-size: 2em;
+}
 .my-4 {
     color: black;
 }

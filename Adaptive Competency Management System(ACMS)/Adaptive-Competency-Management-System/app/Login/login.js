@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var loginForm = document.getElementById('login-form');
     if (loginForm) {
         loginForm.addEventListener('submit', async function(event) {
-            event.preventDefault(); // Prevent form submission
+            event.preventDefault(); 
             
             var emailInput = document.getElementById('email');
             var passwordInput = document.getElementById('password');
@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (email !== '' && password !== '') {
                 try {
-                    // Fetch all employees from backend API
                     const response = await fetch('http://localhost:8080/employees', {
                         method: 'GET',
                         headers: {
@@ -33,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         throw new Error('No employee found with this email');
                     }
 
-                    const storedPasswordHash = employee.password; // Assuming password hash is fetched from API response
+                    const storedPasswordHash = employee.password; 
 
                     // Decode stored password hash
                     const decodedPassword = decodePasswordHash(storedPasswordHash);
@@ -44,13 +43,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     // Verify the decoded password with user input password and email
                     if (password === decodedPassword && email === employee.email) {
-                        console.log('Login successful:', employee);
+                        if (employee.position === 'Admin') {
+                            console.log('Login failed: Admin cannot log in here');
+                            alert('Access denied: Admins are not allowed to log in here.');
+                        } else {
+                            console.log('Login successful:', employee);
 
-                        // Save user info in localStorage or session storage if needed
-                        localStorage.setItem('currentUser', JSON.stringify(employee));
-                        
-                        // Redirect to home page upon successful login
-                        window.location.href = '../../app/dashboard/dashboard.html';
+                            // Save user info in localStorage or session storage if needed
+                            localStorage.setItem('User', JSON.stringify(employee));
+                            
+                            // Redirect to home page upon successful login
+                            window.location.href = '../../app/dashboard/dashboard.html';
+                        }
                     } else {
                         throw new Error('Login failed. Incorrect email or password.');
                     }
@@ -67,11 +71,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Function to decode password hash using Base64 (for demonstration)
 function decodePasswordHash(passwordHash) {
     try {
-        // Replace with your own password decoding logic
-        const decodedPassword = atob(passwordHash); // Decode Base64
+        const decodedPassword = atob(passwordHash); 
         return decodedPassword;
     } catch (error) {
         console.error('Error decoding password hash:', error);

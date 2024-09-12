@@ -1,10 +1,10 @@
-$('#mySidenav').load('../common/sidenav.html');
+$('#mySidenav').load('../../app/user-Sidenav/sidenav.html');
 
 var enrollments;
 var enrolledCourses;
 document.addEventListener('DOMContentLoaded', function () {
     // Initialize UI with enrolled courses for the current user
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const currentUser = JSON.parse(localStorage.getItem('User'));
     if (currentUser && currentUser.employeeId) {
         fetchEnrolledCourses(currentUser.employeeId);
     } else {
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
 // Function to mark course as completed
 function updatedProgress(enrollment, status) {
     console.log('updatedProgress enrollment', enrollment);
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const currentUser = JSON.parse(localStorage.getItem('User'));
     const apiUrl = `http://localhost:8080/enrollments/${enrollment.enrollmentId}`;
     enrollment.status = status;
     fetch(apiUrl, {

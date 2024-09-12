@@ -1,9 +1,9 @@
 // Load side navigation
-$('#mySidenav').load('../common/sidenav.html');
+$('#mySidenav').load('../../app/user-Sidenav/sidenav.html');
 
 document.addEventListener('DOMContentLoaded', function () {
     // Initialize UI with enrolled courses for the current user
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const currentUser = JSON.parse(localStorage.getItem('User'));
     if (currentUser && currentUser.employeeId) {
         fetchEnrolledCourses(currentUser.employeeId);
     } else {

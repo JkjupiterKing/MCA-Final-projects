@@ -1,4 +1,4 @@
-$('#mySidenav').load('../common/sidenav.html');
+$('#mySidenav').load('../../app/user-Sidenav/sidenav.html');
 
 var allCourses;
 var enrolledCourses;
@@ -8,12 +8,25 @@ var completedCourses;
 
 // Initialize UI when the page loads
 document.addEventListener('DOMContentLoaded', () => {
-    fetchUsername(); // Fetch and display username (firstname)
-    initializeUI(); // Initialize the UI with zero ongoing and completed courses
-    fetchEnrolledCourses();
-    addEventListnersToCountCards();
-});
-
+    // Fetch and display username (firstname)
+    fetchUsername();
+  
+    // Initialize the UI with zero ongoing and completed courses
+    initializeUI();
+  
+    // Fetch enrolled courses and wait for the response before executing other functions
+    fetchEnrolledCourses()
+      .then(() => {
+        // Execute other functions after `fetchEnrolledCourses` completes
+        addEventListnersToCountCards();
+        fetchAllCourses("");
+      })
+      .catch(error => {
+        console.error('Error fetching enrolled courses:', error);
+        // Handle error appropriately, such as displaying an error message
+      });
+  });
+  
 document.getElementById('searchButton').addEventListener('click', function () {
     const searchQuery = document.getElementById('courseSearchInput').value.trim();
     if (searchQuery !== '') {
@@ -23,7 +36,7 @@ document.getElementById('searchButton').addEventListener('click', function () {
 });
 
 function fetchUsername() {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const currentUser = JSON.parse(localStorage.getItem('User'));
     const firstName = currentUser.firstName;
     document.getElementById('welcomeMessage').textContent = `Welcome, ${firstName}!`;
 }
@@ -123,6 +136,7 @@ function displayCourses(courses, searchQuery) {
             enrollButton.addEventListener('click', function (event) {
                 event.preventDefault();
                 enrollAndFetch(course.courseId, searchQuery);
+                // fetchAllCourses("");
             });
 
             cardBody.appendChild(enrollButton);
@@ -141,8 +155,12 @@ function displayCourses(courses, searchQuery) {
 
 function alredayEnrolled(course) {
     console.log('alredayEnrolled enrolledCourse', enrolledCourses);
-    const result = enrolledCourses.filter(enrolledCourse => enrolledCourse.course.courseId === course.courseId);
-    return result.length > 0;
+    // if(enrolledCourses) {
+        const result = enrolledCourses.filter(enrolledCourse => enrolledCourse.course.courseId === course.courseId);
+        return result.length > 0;
+    // } else {
+    //     return false;
+    // }
 }
 
 async function enrollAndFetch(courseId,searchQuery) {
@@ -155,7 +173,7 @@ async function enrollAndFetch(courseId,searchQuery) {
 
 function enrollCourse(courseId) {
     const apiUrl = `http://localhost:8080/enrollments/addenrollment`;
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const currentUser = JSON.parse(localStorage.getItem('User'));
 
     if (!currentUser || !currentUser.employeeId) {
         console.error('Current user not found or missing employeeId in localStorage');
@@ -200,7 +218,7 @@ function enrollCourse(courseId) {
 // Event listener for search button click
 function fetchEnrolledCourses() {
     console.log('fetchEnrolledCourses Begin');
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const currentUser = JSON.parse(localStorage.getItem('User'));
     if (!currentUser || !currentUser.employeeId) {
         console.error('Current user not found or missing employeeId in localStorage');
         // Handle error appropriately, such as redirecting to login
@@ -244,13 +262,17 @@ function fetchAllCourses(searchQuery) {
         .then(data => {
             allCourses = data;
             console.log('fetchAllCourses allCourses',allCourses);
-            const filteredCourses = data.filter(course => {
-                return course.courseName.toLowerCase().includes(searchQuery.toLowerCase());
-            });
-            displayCourses(filteredCourses, searchQuery);
+            if(searchQuery) {
+
+                const filteredCourses = data.filter(course => {
+                    return course.courseName.toLowerCase().includes(searchQuery.toLowerCase());
+                });
+                displayCourses(filteredCourses, searchQuery);
+            } else {
+                displayCourses(allCourses, searchQuery);
+            }
         })
         .catch(error => {
             console.error('Error fetching data:', error);
-            // Display error message or handle accordingly
         });
 }

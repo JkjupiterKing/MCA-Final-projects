@@ -5,7 +5,7 @@
   font-style: normal;
 }
 body {
-    background-image: url('../../resources/Images/login-background.jpg'); /* Replace 'login-background.jpg' with your actual image path */
+    background-image: url('../../resources/Images/Background\ \(2\).jpg'); /* Replace 'login-background.jpg' with your actual image path */
     background-size: cover;
     background-position: center;
     height: 100vh;
@@ -47,6 +47,17 @@ body {
   .login-form button[type="submit"]:hover {
     background-color: #1a0433; /* Darker hover color */
     border-color: #1a0433;
+  }
+  #login-btn {
+    background-color: #240750; 
+    border: 1px solid #240750;
+    border-radius: 5px;
+    color: white;
+    padding: 0.4em;
+    font-size: 16px;
+  }
+  #login-btn:hover {
+    color: gray;
   }
   a {
     text-decoration: none;

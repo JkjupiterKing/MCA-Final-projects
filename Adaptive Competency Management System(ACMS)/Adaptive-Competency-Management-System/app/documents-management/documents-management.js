@@ -1,4 +1,4 @@
-$('#mySidenav').load('../common/sidenav.html');
+$('#mySidenav').load('../../app/user-Sidenav/sidenav.html');
 
 document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('documentUploadForm').addEventListener('submit', function(event) {
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (!employeeId) {
         console.error('No employee ID found in localStorage.');
-        documentsList.innerHTML = '<p>No employee ID found in localStorage.</p>';
+        documentsList.innerHTML = '<p>No Documents found.</p>';
         return;
     }
 

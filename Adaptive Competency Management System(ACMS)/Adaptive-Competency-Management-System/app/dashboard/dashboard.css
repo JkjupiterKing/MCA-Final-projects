@@ -58,7 +58,9 @@ h2 {
     flex-wrap: wrap;
     gap: 0.5em; 
 }
-
+#countcard {
+    background-color: #DBE2EF;
+}
 #coursescard {
     margin-left: 0.8em;
     margin-right: 0.5em;
