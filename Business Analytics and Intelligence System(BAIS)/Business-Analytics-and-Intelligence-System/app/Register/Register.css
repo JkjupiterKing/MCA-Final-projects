@@ -55,8 +55,9 @@ body {
 }
 
 .btn-register {
-    width: 100%;
-    padding: 10px; /* Add padding for better button size */
+    width: 30%;
+    margin-left: 10em;
+    border-radius: 10px;
 }
 
 h2 {

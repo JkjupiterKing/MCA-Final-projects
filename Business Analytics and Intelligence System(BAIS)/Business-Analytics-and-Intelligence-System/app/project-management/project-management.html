@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Project Management</title>
-  <!-- Linking Google font link for icons -->
   <link rel="stylesheet" href="../../resources/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="../../app/project-management/project-management.css">
   <link rel="icon" href="../../resources/Images/logo.gif" type="image/x-icon">
@@ -44,6 +43,7 @@
                 <th>Project Name</th>
                 <th id="projectDescription">Project Description</th>
                 <th>Status</th>
+                <th>Assigned Employee</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -81,6 +81,13 @@
                     <option value="Completed">Completed</option>
                     <option value="In-Progress">In-Progress</option>
                     <option value="Pending">Pending</option>
+                </select>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="assignedEmployee">Assign Employee</label>
+                <select class="form-control" id="assignedEmployee" name="assignedEmployee" required>
+                    <!-- Options will be populated dynamically -->
                 </select>
             </div>
             <br>
@@ -122,6 +129,13 @@
                                 <option value="Completed">Completed</option>
                                 <option value="In-Progress">In-Progress</option>
                                 <option value="Pending">Pending</option>
+                            </select>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="updateAssignedEmployee">Assign Employee</label>
+                            <select class="form-control" id="updateAssignedEmployee" name="updateAssignedEmployee" required>
+                                <!-- Options will be populated dynamically -->
                             </select>
                         </div>
                         <br>

@@ -26,8 +26,8 @@ body {
     background-image: url("../../resources/Images/hero-bg.jpg");
     background-position: center;
     backdrop-filter: blur(17px);
-    overflow-y: auto; /* Added to enable scrolling if content exceeds height */
-    scrollbar-width: none; /* Added to hide scrollbar in Firefox */
+    overflow-y: auto; 
+    scrollbar-width: none; 
 }
 
 .sidebar .logo {
@@ -52,7 +52,7 @@ body {
 .sidebar .links {
     list-style: none;
     margin-top: 20px;
-    height: calc(100% - 140px); /* Adjusted for fixed positioning */
+    height: calc(100% - 140px); 
     overflow-y: auto;
     scrollbar-width: none;
     margin-right: 2.5em;
@@ -66,18 +66,18 @@ body {
     display: flex;
     border-radius: 4px;
     align-items: center;
-    margin-bottom: 8px; /* Added spacing between list items */
+    margin-bottom: 8px; 
 }
 
 .links li:hover {
-    background: #fff; /* Removed hover effect */
+    background: #fff; 
 }
 
 .links h4 {
     color: #222;
     font-weight: 500;
     margin-bottom: 10px;
-    display: block; /* Always visible */
+    display: block; 
 }
 
 .links hr {
@@ -92,7 +92,7 @@ body {
 .links li a {
     padding: 10px;
     color: #000;
-    display: block; /* Always visible */
+    display: block; 
     font-weight: 500;
     white-space: nowrap;
     text-decoration: none;
@@ -101,10 +101,10 @@ body {
 .links .logout-link {
     margin-top: 20px;
 }
-/* Add this to your sidebar.css */
+
 .sidebar .links li.admin-management-link,
 .sidebar .links li.Employee-management-link {
-    display: none; /* Hide admin and employee management links by default */
+    display: none; 
 }
 #icon {
     width: 1.5em;

@@ -42,6 +42,7 @@
           <th>Phone Number</th>
           <th>Role</th>
           <th>Address</th>
+          <th>Salary</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -86,6 +87,11 @@
               <input type="text" class="form-control" id="address" name="address" required>
           </div>
           <br>
+          <div class="form-group">
+            <label for="salary">Salary</label>
+            <input type="number" class="form-control" id="salary" name="salary" required>
+          </div>
+          <br>
           <button type="submit" class="btn btn-primary" id="submit">Add</button>
       </form>
       <br>
@@ -121,11 +127,16 @@
                 <select class="form-control" id="updaterole" name="updaterole" required>
                     <!-- Options will be dynamically populated via JavaScript -->
                 </select>
-            </div>
+              </div>
               <br>
               <div class="form-group">
                 <label for="updateAddress">Address</label>
                 <input type="text" class="form-control" id="updateAddress" name="updateAddress" required>
+              </div>
+              <br>
+              <div class="form-group">
+                <label for="updateSalary">Salary</label>
+                <input type="number" class="form-control" id="updateSalary" name="updateSalary" required>
               </div>
               <br>
               <button type="submit" class="btn btn-primary" id="updateuser">Update User</button>

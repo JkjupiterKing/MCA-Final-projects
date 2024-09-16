@@ -1,0 +1,62 @@
+@font-face {
+    font-family: 'Mukta';
+    src: url('../../resources/fonts/Mukta-Medium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+body {
+  font-family: "Mukta", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  margin-left: 280px;
+  margin-top: 1em;
+  margin-right: 1em;
+  font-family: "Mukta", sans-serif;
+}
+
+h1 {
+margin-left: 1em;
+font-size: 3em;
+font-weight: bold;
+}
+
+label {
+font-weight: bold;
+}
+
+.card {
+border: none;
+}
+
+#Profile-Image {
+margin-left: 10em;
+}
+
+#Profile-header {
+background-color: #B5C0D0;
+margin-left: 1.2em;
+}
+
+.card-body {
+padding: 1.5rem;
+}
+
+.d-flex {
+display: flex;
+}
+
+.align-items-center {
+align-items: center;
+}
+
+.ml-3 {
+margin-left: 1rem;
+}
+
+button {
+margin-top: 1rem;
+}
+

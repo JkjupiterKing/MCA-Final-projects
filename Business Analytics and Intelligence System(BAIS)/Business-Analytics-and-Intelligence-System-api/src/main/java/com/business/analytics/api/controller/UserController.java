@@ -19,7 +19,6 @@ public class UserController {
     private final UserRepo userRepository;
     private final RoleRepo roleRepository;
 
-
     @Autowired
     public UserController(UserRepo userRepository, RoleRepo roleRepository) {
         this.userRepository = userRepository;
@@ -52,7 +51,6 @@ public class UserController {
         return userOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Endpoint to update a user by userId
     @PutMapping("/update/{userId}")
     public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User updatedUser) {
         Optional<User> userOptional = userRepository.findById(userId);
@@ -78,6 +76,11 @@ public class UserController {
             // Update password if provided
             if (updatedUser.getPassword() != null && !updatedUser.getPassword().isEmpty()) {
                 existingUser.setPassword(updatedUser.getPassword());
+            }
+
+            // Update salary if provided
+            if (updatedUser.getSalary() != null) {
+                existingUser.setSalary(updatedUser.getSalary());
             }
 
             User savedUser = userRepository.save(existingUser);

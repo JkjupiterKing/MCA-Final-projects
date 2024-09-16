@@ -48,7 +48,9 @@ body {
 }
 
 .btn-login {
-    width: 100%;
+    position: fixed;
+    width: 7em;
+    margin-left: 7em;
 }
 
 h1{
@@ -61,8 +63,14 @@ h1{
     margin-left: 0.3em;
     cursor: pointer;
 }
+.forgot-password-link:hover {
+    color: grey;
+}
 .register-link {
     text-decoration: none;
     color: black;
     cursor: pointer;
+}
+.register-link:hover{
+ color: gray;
 }

@@ -45,7 +45,7 @@ public class AnnouncementController {
     public ResponseEntity<Announcement> updateAnnouncement(@PathVariable("id") Long id, @RequestBody Announcement updatedAnnouncement) {
         Optional<Announcement> announcementOptional = announcementRepository.findById(id);
         if (announcementOptional.isPresent()) {
-            updatedAnnouncement.setAnnouncementId(id); // Ensure the ID from path variable is set in the updated object
+            updatedAnnouncement.setAnnouncementId(id);
             Announcement savedAnnouncement = announcementRepository.save(updatedAnnouncement);
             return ResponseEntity.ok(savedAnnouncement);
         } else {

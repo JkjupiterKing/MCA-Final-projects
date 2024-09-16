@@ -29,8 +29,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (userFound) {
                     // Store user information in localStorage with roleId
                     const userToStore = {
+                        userId:userFound.userId,
                         email: userFound.email,
-                        roleId: userFound.role.roleId // Ensure roleId is included
+                        roleId: userFound.role.roleId,
+                        username : userFound.username,
+                        salary: userFound.salary, 
+                        roleName:userFound.role.roleName
                     };
                     localStorage.setItem('user', JSON.stringify(userToStore));
                     
@@ -39,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     // Redirect based on roleId
                     if (userFound.role.roleId === 5) {
-                        window.location.href = '../../app/Announcements-Management/Announcements-Management.html'; 
+                        window.location.href = '../../app/User-dashboard/UserDashboard.html'; 
                     } else {
                         window.location.href = '../../app/dashboard/dashboard.html';      
                     }

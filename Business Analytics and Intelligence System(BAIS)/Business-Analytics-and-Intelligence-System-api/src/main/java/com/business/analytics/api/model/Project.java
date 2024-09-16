@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.Date;
-
 @Entity
 @Table(name = "projects")
 @NoArgsConstructor
@@ -29,6 +27,9 @@ public class Project {
     private String description;
 
     @Column(nullable = false)
-    private String status; // Assuming status can be 'planned', 'ongoing', 'completed'
+    private String status;
 
+    @ManyToOne
+    @JoinColumn(name = "username", referencedColumnName = "username")
+    private User user;
 }

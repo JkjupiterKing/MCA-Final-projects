@@ -17,6 +17,7 @@ import java.util.Optional;
 public interface UserRepo extends JpaRepository<User, Long> {
     List<User> findAllByOrderByUserIdDesc();
     List<User> findByEmail(String email);
+    User findByUsername(String username);
     @Transactional
     @Modifying
     @Query("UPDATE User u SET u.password = :newPassword WHERE u.email = :emailId")

@@ -185,6 +185,7 @@ function displayUsers(users) {
             '<td>' + user.phone + '</td>' +
             '<td>' + user.role.roleName + '</td>' +
             '<td>' + user.address + '</td>' +
+            '<td>' + user.salary + '</td>' +
             '<td>' +
             '<button type="button" class="btn btn-primary btn-sm btn-update" data-user-id="' + userId + '">Update</button> ' +
             '<button type="button" class="btn btn-danger btn-sm btn-delete" data-user-id="' + userId + '">Delete</button>' +
@@ -208,7 +209,6 @@ function updatePagination() {
     pagination.innerHTML = paginationHtml;
 }
 
-// Function to add a new user
 function addUser() {
     var formData = new FormData(addUserForm);
     var userData = {
@@ -219,7 +219,8 @@ function addUser() {
             roleId: formData.get('role')
         },
         address: formData.get('address'),
-        password:"password123"
+        salary: formData.get('salary'), 
+        password: "password123"
     };
 
     var xhr = new XMLHttpRequest();
@@ -291,6 +292,7 @@ function updateUser(userData) {
     xhr.send(JSON.stringify(userData)); // Send user data as JSON string
     xhr.onload = function () {
         if (xhr.status === 200) {
+            alert('user updated successfully!')
             console.log('User updated successfully:', xhr.responseText);
             var updateModal = new bootstrap.Modal(document.getElementById('UpdateUserModal'));
             updateModal.hide(); // Hide the modal after successful update
@@ -298,13 +300,11 @@ function updateUser(userData) {
             displayManageUsers(); // Display manage users table
         } else {
             console.error('Error updating user:', xhr.statusText);
-            // Handle error as needed
         }
     };
     xhr.onerror = function () {
         console.error('Error updating user. Network error.');
     };
-
 }
 
 // Function to open update form/modal with user details
@@ -322,6 +322,7 @@ function openUpdateForm(userId) {
     document.getElementById('updateEmail').value = user.email;
     document.getElementById('updatePhone').value = user.phone;
     document.getElementById('updateAddress').value = user.address;
+    document.getElementById('updateSalary').value = user.salary; // Set salary
 
     // Populate role dropdown and set the current role as selected
     var selectDropdown = document.getElementById('updaterole');
@@ -341,7 +342,6 @@ function openUpdateForm(userId) {
     var updateModal = new bootstrap.Modal(document.getElementById('UpdateUserModal'));
     updateModal.show();
 }
-
 
 // Function to delete user
 function deleteUser(userId) {
