@@ -4,17 +4,14 @@ $('#mySidenav').load('../../app/user-Sidenav/sidenav.html');
 const currentUser = JSON.parse(localStorage.getItem('User'));
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Initialize UI with enrolled courses for the current user
     if (currentUser && currentUser.employeeId) {
         fetchCompletedCourses(currentUser.employeeId);
     } else {
         console.error('No current user found or employee ID missing in localStorage.');
-        // Display message or handle redirect to login, etc.
     }
 });
 
 function fetchCompletedCourses(employeeId) {
-    // Include 'status=completed' in the query parameters
     const apiUrl = `http://localhost:8080/enrollments/status?employeeId=${employeeId}&status=Completed`;
 
     fetch(apiUrl)
@@ -29,23 +26,19 @@ function fetchCompletedCourses(employeeId) {
             if (enrollments.length === 0) {
                 displayNoEnrolledCoursesMessage();
             } else {
-                // Extract course IDs and enrollment IDs from enrollments
                 const courseDetails = enrollments.map(enrollment => ({
                     courseId: enrollment.course.courseId,
                     enrollmentId: enrollment.enrollmentId,
                     courseName: enrollment.course.courseName
                 }));
-                // Fetch courses based on course IDs
                 fetchCoursesByEnrollments(courseDetails);
             }
         })
         .catch(error => {
             console.error('Error fetching completed courses:', error);
-            // Display error message or handle accordingly
         });
 }
 
-// Function to fetch courses based on course details (including enrollmentId)
 function fetchCoursesByEnrollments(courseDetails) {
     if (courseDetails.length === 0) {
         console.log('No completed courses found for the employee.');
@@ -53,7 +46,6 @@ function fetchCoursesByEnrollments(courseDetails) {
         return;
     }
 
-    // Fetch courses individually as backend does not support multiple IDs in one request
     Promise.all(courseDetails.map(detail => fetchCourseById(detail.courseId)))
         .then(responses => Promise.all(responses.map(response => response.json())))
         .then(courses => {
@@ -65,7 +57,6 @@ function fetchCoursesByEnrollments(courseDetails) {
         });
 }
 
-// Function to fetch a single course by ID
 function fetchCourseById(courseId) {
     const apiUrl = `http://localhost:8080/courses/${courseId}`;
     return fetch(apiUrl).then(response => {
@@ -78,7 +69,7 @@ function fetchCourseById(courseId) {
 
 function displayCourses(courses, courseDetails) {
     const container = document.getElementById('assessmentList');
-    container.innerHTML = ''; // Clear previous content
+    container.innerHTML = ''; 
 
     if (courses.length === 0) {
         displayNoEnrolledCoursesMessage();
@@ -87,7 +78,7 @@ function displayCourses(courses, courseDetails) {
 
     courses.forEach(course => {
         const courseDetail = courseDetails.find(detail => detail.courseId === course.courseId);
-        if (!courseDetail) return; // Skip if no matching detail found
+        if (!courseDetail) return; 
 
         const courseHtml = `
            <div class="col-md-6 mb-4">
@@ -96,9 +87,9 @@ function displayCourses(courses, courseDetails) {
                 <div class="card-body">
                     <h5 class="card-title">${course.courseName}</h5>
                     <p class="card-text">${course.description}</p>
-                    <a href="../../app/Questions/question.html" class="btn btn-primary start-assessment"
+                    <a href="#" class="btn btn-primary start-assessment"
                        data-course-name="${course.courseName}" 
-                       data-enrollment-id="${courseDetail.enrollmentId}" target="_blank">Retake Assessment</a>
+                       data-enrollment-id="${courseDetail.enrollmentId}">Retake Assessment</a>
                     <button class="btn btn-secondary retake-course"
                        data-course-id="${course.courseId}" 
                        data-enrollment-id="${courseDetail.enrollmentId}">Retake Course</button>
@@ -111,13 +102,13 @@ function displayCourses(courses, courseDetails) {
         container.innerHTML += courseHtml;
     });
 
-    // Add click event listener to "Start Assessment" and "View Results" buttons
     document.querySelectorAll('.start-assessment').forEach(link => {
-        link.addEventListener('click', function() {
+        link.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default link behavior
+
             const courseName = this.getAttribute('data-course-name');
             const enrollmentId = this.getAttribute('data-enrollment-id');
-            localStorage.setItem('currentCourseName', courseName);
-            localStorage.setItem('currentEnrollmentId', enrollmentId);
+            checkAttemptLimit(enrollmentId, courseName);
         });
     });
 
@@ -128,17 +119,16 @@ function displayCourses(courses, courseDetails) {
         });
     });
 
-    // Add click event listener to "Retake Course" buttons
     document.querySelectorAll('.retake-course').forEach(button => {
         button.addEventListener('click', function() {
             const courseId = this.getAttribute('data-course-id');
-            fetchVideoUrl(courseId); // Fetch and handle video URL
+            fetchVideoUrl(courseId);
         });
     });
 }
 
-function fetchVideoUrl(courseId) {
-    const apiUrl = `http://localhost:8080/courses/${courseId}`; // Assuming endpoint to fetch video URL
+function checkAttemptLimit(enrollmentId, courseName) {
+    const apiUrl = `http://localhost:8080/assessment-results/getResults?enrollmentId=${enrollmentId}&employeeId=${currentUser.employeeId}`;
 
     fetch(apiUrl)
         .then(response => {
@@ -147,17 +137,20 @@ function fetchVideoUrl(courseId) {
             }
             return response.json();
         })
-        .then(course => {
-            if (course && course.courseUrl) {
-                // Example: Open video in a new tab
-                window.open(course.courseUrl, '_blank');
+        .then(results => {
+            const maxAttempts = 3;
+            const attempts = results.length;
+
+            if (attempts >= maxAttempts) {
+                alert('You have reached the maximum number of attempts for this assessment.');
             } else {
-                console.error('Video URL not found in API response');
+                localStorage.setItem('currentCourseName', courseName);
+                localStorage.setItem('currentEnrollmentId', enrollmentId);
+                window.open('../../app/Questions/question.html', '_blank');
             }
         })
         .catch(error => {
-            console.error('Error fetching video URL:', error);
-            // Display error message or handle accordingly
+            console.error('Error fetching assessment results:', error);
         });
 }
 
@@ -173,45 +166,65 @@ function fetchAssessmentResults(enrollmentId, button) {
         })
         .then(results => {
             if (results.length === 0) {
-                // button.classList.add('d-none'); // Hide the button if no results
                 displayNoResultsMessage();
             } else {
-                // button.classList.remove('d-none'); // Show the button if results are found
                 showResultsInModal(results);
             }
         })
         .catch(error => {
             console.error('Error fetching assessment results:', error);
-            // button.classList.add('d-none'); // Hide the button on error
-            // Display error message or handle accordingly
         });
 }
 
 function showResultsInModal(results) {
     const modalBody = document.getElementById('modal-body');
-    modalBody.innerHTML = ''; // Clear previous content
+    modalBody.innerHTML = ''; 
 
-    results.forEach(result => {
+    let maxAttempt = 0;
+    results.forEach((result, index) => {
+        maxAttempt = Math.max(maxAttempt, index + 1);
         const resultHtml = `
-        <p><strong>Attempt:</strong> ${result.attemptNumber}</p>
-        <p><strong>Course:</strong> ${result.enrollment.course.courseName}</p>
-        <p><strong>Score:</strong> ${result.score}</p>
+        <p><strong>Attempt: </strong>${index + 1}</p>
+        <p><strong>Course: </strong> ${result.enrollment.course.courseName}</p>
+        <p><strong>Score: </strong> ${result.score}</p>
             <hr>
         `;
         modalBody.innerHTML += resultHtml;
     });
 
+    localStorage.setItem('maxAttemptIndex', maxAttempt); // Save max attempt index
+
     const myModal = new bootstrap.Modal(document.getElementById('resultsModal'));
     myModal.show();
 }
 
-// Function to display a message when no courses are enrolled
+function fetchVideoUrl(courseId) {
+    const apiUrl = `http://localhost:8080/courses/${courseId}`; 
+
+    fetch(apiUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(course => {
+            if (course && course.courseUrl) {
+                window.open(course.courseUrl, '_blank');
+            } else {
+                console.error('Video URL not found in API response');
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching video URL:', error);
+        });
+}
+
 function displayNoEnrolledCoursesMessage() {
     const container = $('#assessmentList');
     container.html('<p>No completed courses found.</p>');
 }
 
-// Function to display a message when no results are found
 function displayNoResultsMessage() {
     const modalBody = document.getElementById('modal-body');
     modalBody.innerHTML = '<p>No results found.</p>';

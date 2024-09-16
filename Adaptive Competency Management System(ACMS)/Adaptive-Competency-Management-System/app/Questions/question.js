@@ -204,7 +204,6 @@ function evaluateAnswers() {
     };
 
     postResults(postData);
-    // Show results modal after posting results
     showResultsInModal(postData);
 }
 

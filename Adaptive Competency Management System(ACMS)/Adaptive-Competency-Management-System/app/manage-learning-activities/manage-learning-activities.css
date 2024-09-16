@@ -5,12 +5,12 @@
     font-style: normal;
 }
 body {
-    padding-top: 1em; /* Adjust based on navbar height */
+    padding-top: 1em; 
     font-family: "PT Sans", sans-serif;
 }
 
 .main-content {
-    margin-left: 270px; /* Adjust based on sidebar width */
+    margin-left: 270px; 
     padding: 20px;
 }
 

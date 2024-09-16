@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const registerForm = document.getElementById('registerForm');
 
     registerForm.addEventListener('submit', async (event) => {
-        event.preventDefault(); // Prevent the form from submitting via the browser
+        event.preventDefault(); 
 
         // Collect form data
         const formData = {
@@ -16,6 +16,12 @@ document.addEventListener('DOMContentLoaded', () => {
             password: document.getElementById('password').value, 
             address: document.getElementById('address').value
         };
+
+        // Check if hireDate and birthDate are the same
+        if (formData.hireDate === formData.birthDate) {
+            alert('Hire date and birth date cannot be the same. Please enter different dates.');
+            return; 
+        }
 
         // Send data to backend API
         try {
@@ -37,14 +43,12 @@ document.addEventListener('DOMContentLoaded', () => {
             // Show success modal
             $('#successModal').modal('show');
 
-            // Optionally, redirect to login page after a delay
             setTimeout(() => {
                 window.location.href = '../../app/Login/login.html';
-            }, 3000); // Redirect after 3 seconds (adjust as needed)
+            }, 3000); 
 
         } catch (error) {
             console.error('Error registering user:', error.message);
-            // Handle error: display error message to user
         }
     });
 });

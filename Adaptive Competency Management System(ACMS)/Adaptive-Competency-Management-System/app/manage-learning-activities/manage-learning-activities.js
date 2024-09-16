@@ -1,14 +1,12 @@
-// Load side navigation
+
 $('#mySidenav').load('../../app/user-Sidenav/sidenav.html');
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Initialize UI with enrolled courses for the current user
     const currentUser = JSON.parse(localStorage.getItem('User'));
     if (currentUser && currentUser.employeeId) {
         fetchEnrolledCourses(currentUser.employeeId);
     } else {
         console.error('No current user found or employee ID missing in localStorage.');
-        // Display message or handle redirect to login, etc.
     }
 });
 
@@ -50,11 +48,11 @@ function fetchEnrolledCourses(employeeId) {
                 // Convert courseStatusData object into arrays for the chart
                 const chartLabels = Object.keys(courseStatusData);
                 const statusLabels = Array.from(new Set(Object.values(courseStatusData).flatMap(status => Object.keys(status))));
-                
+
                 const datasets = statusLabels.map(status => {
                     return {
                         label: status,
-                        backgroundColor: getRandomColor(), // Function to generate random colors
+                        backgroundColor: getRandomColor(),
                         borderColor: 'rgba(54, 162, 235, 1)',
                         borderWidth: 1,
                         data: chartLabels.map(courseName => courseStatusData[courseName][status] || 0)
@@ -102,11 +100,11 @@ function fetchAssessmentResults(employeeId) {
 function prepareAssessmentResultsData(results) {
     const courseScores = results.reduce((acc, result) => {
         const courseName = result.enrollment.course.courseName;
-        const score = result.score; // "3/5"
-        const [correct, total] = score.split('/').map(Number);
-        const scorePercentage = (correct / total) * 100;
+        const score = result.score; 
+        const totalQuestions = 10; 
+        const scorePercentage = (parseInt(score) / totalQuestions) * 100;
 
-        acc[courseName] = scorePercentage; // Update score percentage for the course
+        acc[courseName] = scorePercentage; 
 
         return acc;
     }, {});
@@ -118,7 +116,7 @@ function prepareAssessmentResultsData(results) {
         labels: labels,
         datasets: [{
             label: 'Course Scores',
-            backgroundColor: ['#28a745', '#dc3545', '#ffc107', '#17a2b8'], // Add more colors if needed
+            backgroundColor: ['#28a745', '#dc3545', '#ffc107', '#17a2b8'], 
             borderColor: '#ffffff',
             borderWidth: 1,
             data: data
@@ -130,7 +128,6 @@ function prepareAssessmentResultsData(results) {
 function updateAssessmentResultsChart(assessmentResultsData) {
     var assessmentResultsCtx = document.getElementById('assessmentResultsChart').getContext('2d');
 
-    // Destroy the existing chart instance if it exists
     if (window.assessmentResultsChart instanceof Chart) {
         window.assessmentResultsChart.destroy();
     }
@@ -138,15 +135,29 @@ function updateAssessmentResultsChart(assessmentResultsData) {
     // Create a new chart instance
     window.assessmentResultsChart = new Chart(assessmentResultsCtx, {
         type: 'pie',
-        data: assessmentResultsData,
+        data: {
+            labels: assessmentResultsData.labels,
+            datasets: [{
+                label: 'Course Scores',
+                backgroundColor: ['#28a745', '#dc3545', '#ffc107', '#17a2b8'], 
+                borderColor: '#ffffff',
+                borderWidth: 1,
+                data: assessmentResultsData.datasets[0].data
+            }]
+        },
         options: {
             responsive: true,
-            legend: {
-                position: 'top',
-            },
-            title: {
-                display: true,
-                text: 'Assessment Results by Course'
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `${context.label}: ${context.raw.toFixed(2)}%`; 
+                        }
+                    }
+                }
             }
         }
     });
@@ -165,8 +176,8 @@ function getRandomColor() {
 // Function to update user progress chart (existing function)
 function updateUserProgressChart(labels, datasets) {
     var userProgressData = {
-        labels: labels, // Array of course names
-        datasets: datasets // Array of datasets for each status
+        labels: labels,
+        datasets: datasets
     };
 
     var userProgressCtx = document.getElementById('userProgressChart').getContext('2d');
@@ -195,7 +206,7 @@ function updateUserProgressChart(labels, datasets) {
                     },
                     ticks: {
                         callback: function(value, index, values) {
-                            return ''; // Return an empty string to hide the label
+                            return ''; 
                         }
                     }
                 }
@@ -203,3 +214,4 @@ function updateUserProgressChart(labels, datasets) {
         }
     });
 }
+
