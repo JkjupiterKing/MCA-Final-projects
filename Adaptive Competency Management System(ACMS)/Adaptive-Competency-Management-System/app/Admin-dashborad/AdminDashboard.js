@@ -145,8 +145,7 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch(apiEndpoints.totalEnrolledCourses)
             .then(response => response.json())
             .then(data => {
-                const filteredenrollments = data.filter(enrollment => enrollment.status === 'Enrolled');
-                document.getElementById('TotalenrolledCoursesFound').textContent = filteredenrollments.length || '0';
+                document.getElementById('TotalenrolledCoursesFound').textContent = data.length || '0';
             })
             .catch(error => console.error('Error fetching total enrolled courses:', error));
 
