@@ -58,6 +58,9 @@ public class ProjectController {
         Project existingProject = projectRepo.findById(id).get();
         User user = userRepo.findByUsername(updatedProject.getUser().getUsername());
         existingProject.setUser(user);
+        existingProject.setStatus(updatedProject.getStatus());
+        existingProject.setTitle(updatedProject.getTitle());
+        existingProject.setDescription(updatedProject.getDescription());
         return projectRepo.save(existingProject);
     }
 
