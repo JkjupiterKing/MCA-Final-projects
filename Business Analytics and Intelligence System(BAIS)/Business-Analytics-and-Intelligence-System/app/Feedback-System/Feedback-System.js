@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((data) => {
         feedbacks = data;
         totalPages = Math.ceil(feedbacks.length / pageSize);
-        displayFeedback();
+        displayFeedback(User);
       })
       .catch((error) => {
         console.error("Error fetching feedback:", error);
@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         adminQuestions.forEach((question) => {
           const option = document.createElement("option");
-          option.value = question.id;
+          option.value = question.question;
           option.textContent = question.question;
           dropdown.appendChild(option);
         });
@@ -64,14 +64,22 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Display feedbacks in the table
-  function displayFeedback() {
-    const tableBody = document.getElementById("ManageFeedbackTableData");
+  function displayFeedback(User) {
+      const tableBody = document.getElementById("ManageFeedbackTableData");
     tableBody.innerHTML = "";
+    
+    if(User.username&&User.roleId==5) {
+      filteredFeedbacks = feedbacks.filter(
+        (feedback) => feedback.username === username
+      );
+    } else {
+      filteredFeedbacks = feedbacks
+    }
 
     // Calculate pagination variables
     const startIndex = (currentPage - 1) * pageSize;
     const endIndex = startIndex + pageSize;
-    const pageFeedbacks = feedbacks.slice(startIndex, endIndex);
+    const pageFeedbacks = filteredFeedbacks.slice(startIndex, endIndex);
 
     pageFeedbacks.forEach((feedback) => {
       const row = document.createElement("tr");
@@ -103,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Go to a specific page
   window.gotoPage = function (pageNumber) {
     currentPage = pageNumber;
-    displayFeedback();
+    displayFeedback(User);
   };
 
   // Event listener for showing manage feedback (display table)
@@ -163,7 +171,7 @@ document.addEventListener("DOMContentLoaded", function () {
     event.preventDefault();
     const selectedQuestionId = document.getElementById(
       "feedbackQuestionDropdown"
-    ).value;
+    ).value;    
     const feedbackText = document.getElementById("feedback").value;
 
     const feedback = {
@@ -207,7 +215,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const feedback = {
       question: feedbackQuestion,
-      answer: null,
+      answer: "Not Applicable for Admin",
       addedBy: rolename,
       username: username,
     };
