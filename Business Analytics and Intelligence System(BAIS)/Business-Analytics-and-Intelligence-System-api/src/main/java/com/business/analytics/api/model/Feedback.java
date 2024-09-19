@@ -28,10 +28,16 @@ public class Feedback {
         @Column(name = "Question")
         private String question;
 
-        @Column(name = "Description")
-        private String description;
+        @Column(name = "Answer")
+        private String answer;
 
-        @CreationTimestamp // Automatically sets the field on entity creation
+        @Column(name = "AddedBy")
+        private String addedBy;
+
+        @Column(name = "Username")
+        private String username;
+
+        @CreationTimestamp
         @Column(name = "Created_at",updatable = false)
         private LocalDateTime createdAt;
     }

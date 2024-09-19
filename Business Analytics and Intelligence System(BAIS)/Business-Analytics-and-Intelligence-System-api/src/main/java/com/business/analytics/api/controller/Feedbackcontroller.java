@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/feedback") // Use lowercase for REST paths
+@RequestMapping("/feedback")
 @CrossOrigin
 public class Feedbackcontroller {
 
@@ -32,7 +32,7 @@ public class Feedbackcontroller {
 
     @PostMapping("/addFeedback")
     public ResponseEntity<Feedback> createFeedback(@RequestBody Feedback feedback) {
-        feedback.setCreatedAt(LocalDateTime.now()); // Automatically set the creation date
+        feedback.setCreatedAt(LocalDateTime.now());
         Feedback createdFeedback = feedbackRepo.save(feedback);
         return new ResponseEntity<>(createdFeedback, HttpStatus.CREATED);
     }
@@ -41,8 +41,8 @@ public class Feedbackcontroller {
     public ResponseEntity<Feedback> updateFeedback(@PathVariable Long id, @RequestBody Feedback feedback) {
         Feedback existingFeedback = feedbackRepo.findById(id).orElse(null);
         if (existingFeedback != null) {
-            feedback.setFeedbackId(id); // Set the ID to the existing feedback's ID
-            feedback.setCreatedAt(existingFeedback.getCreatedAt()); // Preserve the original creation date
+            feedback.setFeedbackId(id);
+            feedback.setCreatedAt(existingFeedback.getCreatedAt());
             Feedback updatedFeedback = feedbackRepo.save(feedback);
             return new ResponseEntity<>(updatedFeedback, HttpStatus.OK);
         } else {

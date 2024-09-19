@@ -1,41 +1,55 @@
 main {
-    margin-left: 295px;
-    margin-top: 1.5em;
-    margin-right: 1.2em;
+  margin-left: 295px;
+  margin-top: 1.5em;
+  margin-right: 1.2em;
 }
 
 #submit {
-   background-color: grey; 
-   border-color: grey;
+  background-color: grey;
+  border-color: grey;
 }
 
 #submit:hover {
-    color: black;
+  color: black;
+}
+#create-feedback-btn {
+  background-color: grey;
+  border-color: grey;
+}
+#create-feedback-btn:hover {
+  color: black;
+}
+#modalSubmitBtn {
+  background-color: grey;
+  border-color: grey;
+}
+#modalSubmitBtn:hover {
+  color: black;
 }
 .pagination {
-    justify-content: center; /* Centers the pagination items */
-    font-weight: bold; /* Makes the font bold */
-    margin-right: 5em;
-  }
-  
-  .pagination li {
-    display: inline-block; /* Displays pagination items horizontally */
-    font-size: 1.2em; /* Adjusts the font size */
-  }
-  .pagination a {
-    color: black; /* Sets the text color */
-    text-decoration: none; /* Removes underline */
-    padding: 8px 12px; /* Adds padding inside the pagination items */
-    border: 1px solid #071952; /* Adds a border around pagination items */
-    border-radius: 1px; /* Rounds the corners */
-  }
-  
-  .pagination a:hover {
-    background-color: grey; /* Changes background color on hover */
-    color: white; /* Changes text color on hover */
-  }
-  .pagination .active a {
-    background-color: grey; /* Changes background color for active item */
-    border-color: grey;
-    color: white; /* Changes text color for active item */
-  }
+  justify-content: center;
+  font-weight: bold;
+  margin-right: 5em;
+}
+
+.pagination li {
+  display: inline-block;
+  font-size: 1.2em;
+}
+.pagination a {
+  color: black;
+  text-decoration: none;
+  padding: 8px 12px;
+  border: 1px solid #071952;
+  border-radius: 1px;
+}
+
+.pagination a:hover {
+  background-color: grey;
+  color: white;
+}
+.pagination .active a {
+  background-color: grey;
+  border-color: grey;
+  color: white;
+}

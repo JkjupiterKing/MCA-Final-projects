@@ -60,6 +60,7 @@ public class UserController {
             existingUser.setEmail(updatedUser.getEmail());
             existingUser.setPhone(updatedUser.getPhone());
             existingUser.setAddress(updatedUser.getAddress());
+            existingUser.setSalary(updatedUser.getSalary());
 
             // Update role only if the roleId is provided in the updatedUser object
             if (updatedUser.getRole() != null && updatedUser.getRole().getRoleId() != null) {
@@ -69,7 +70,7 @@ public class UserController {
                                     "Role not found with ID: " + updatedUser.getRole().getRoleId()));
                     existingUser.setRole(role);
                 } catch (Exception e) {
-                    return ResponseEntity.badRequest().body(null); // Handle specific exceptions as needed
+                    return ResponseEntity.badRequest().body(null);
                 }
             }
 

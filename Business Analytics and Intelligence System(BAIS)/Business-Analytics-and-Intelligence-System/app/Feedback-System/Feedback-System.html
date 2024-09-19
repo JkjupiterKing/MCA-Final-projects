@@ -1,74 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Project Management</title>
-  <!-- Linking Google font link for icons -->
-  <link rel="stylesheet" href="../../resources/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="../../app/Feedback-System/Feedback-System.css">
-  <link rel="icon" href="../../resources/Images/logo.gif" type="image/x-icon">
-</head>
-<body>
-  <!-- Sidebar -->
-  <div class="sidenav" id="mySidenav">
-    <!-- Sidebar content here -->
-  </div>
-  <main>
-    <h1 id="FeedbackSystemTitle">Feedback System</h1>
-    <br>
-    <div class="row">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Management</title>
+    <link
+      rel="stylesheet"
+      href="../../resources/bootstrap/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../app/Feedback-System/Feedback-System.css"
+    />
+    <link
+      rel="icon"
+      href="../../resources/Images/logo.gif"
+      type="image/x-icon"
+    />
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidenav" id="mySidenav">
+      <!-- Sidebar content here -->
+    </div>
+    <main>
+      <h1 id="FeedbackSystemTitle">Feedback System</h1>
+      <br />
+      <div class="row">
         <div class="col-md-8">
-            <div class="btn-toolbar mb-3" role="toolbar" aria-label="Feedback Management Actions">
-                <div class="btn-group me-2" role="group" aria-label="Manage Feedbacks">
-                    <button type="button" class="btn btn-secondary" id="manage-btn">Manage Feedbacks</button>
-                </div>
-                <div class="btn-group me-2" role="group" aria-label="Add New Feedback">
-                    <button type="button" class="btn btn-secondary" id="add-btn">Add Feedback</button>
-                </div>
+          <div
+            class="btn-toolbar mb-3"
+            role="toolbar"
+            aria-label="Feedback Management Actions"
+          >
+            <div
+              class="btn-group me-2"
+              role="group"
+              aria-label="Manage Feedbacks"
+            >
+              <button type="button" class="btn btn-secondary" id="manage-btn">
+                Manage Feedbacks
+              </button>
             </div>
+            <div
+              class="btn-group me-2"
+              role="group"
+              aria-label="Add New Feedback"
+            >
+              <button type="button" class="btn btn-secondary" id="add-btn">
+                Add Feedback
+              </button>
+            </div>
+            <!-- Create Feedback Button -->
+            <div
+              class="btn-group me-2"
+              role="group"
+              id="create-feedback-btn-group"
+              style="display: none"
+            >
+              <button
+                type="button"
+                class="btn btn-secondary"
+                id="create-feedback-btn"
+                data-bs-toggle="modal"
+                data-bs-target="#feedbackModal"
+              >
+                Create Feedback Question
+              </button>
+            </div>
+          </div>
         </div>
       </div>
-      <br> 
+      <br />
       <div class="input-group mb-3">
-        <input type="text" id="searchInput" class="form-control" placeholder="Search by Feedback Name" oninput="performSearch()">
+        <input
+          type="text"
+          id="searchInput"
+          class="form-control"
+          placeholder="Search by Feedback Name"
+          oninput="performSearch()"
+        />
       </div>
-      <br>       
-      <!-- Table for managing existing users -->
+      <br />
+      <!-- Table for managing existing feedbacks -->
       <table id="DisplayFeedbackList" class="table table-striped">
         <thead class="thead-dark">
           <tr>
-            <th>Sl No</th>
             <th>Feedback Question</th>
-            <th>Feedback Description</th>
+            <th>Feedback Answer</th>
+            <th>Employee Name</th>
           </tr>
         </thead>
         <tbody id="ManageFeedbackTableData">
-          <!-- User data will be dynamically inserted here -->
+          <!-- Feedback data will be dynamically inserted here -->
         </tbody>
       </table>
-      <br>
+      <br />
       <ul id="pagination" class="pagination">
         <!-- Pagination links will be dynamically added here -->
       </ul>
-      <br>
-      <!-- Form for adding new user -->
-      <div id="AddFeedbackForm" style="display: none; width: 100%;">
+      <br />
+      <!-- Form for adding new feedback -->
+      <div id="AddFeedbackForm" style="display: none; width: 100%">
         <h3>Add Feedback</h3>
-        <br>
+        <br />
         <form id="feedbackForm">
-            <div class="form-group">
-              <label for="feedbackQuestion">How do you rate the Quarter cycle Apprasial?</label>
-              <input type="text" class="form-control" id="feedback" name="feedback" required>
-            </div>
-            <br>
-            <button type="submit" class="btn btn-primary" id="submit">Submit Feedback</button>
-          </form>
-        <br>
+          <div class="form-group">
+            <label for="feedbackQuestionDropdown"
+              >Select Feedback Question</label
+            >
+            <select class="form-control" id="feedbackQuestionDropdown" required>
+              <option value="" disabled selected>Select a question</option>
+              <!-- Feedback questions will be dynamically inserted here -->
+            </select>
+          </div>
+          <br />
+          <div class="form-group">
+            <label for="feedback">Your Answer</label>
+            <input
+              type="text"
+              class="form-control"
+              id="feedback"
+              name="feedback"
+              required
+            />
+          </div>
+          <br />
+          <button type="submit" class="btn btn-primary" id="submit">
+            Submit Feedback
+          </button>
+        </form>
+        <br />
+      </div>
+    </main>
+
+    <!-- Modal for Create Feedback -->
+    <div
+      class="modal fade"
+      id="feedbackModal"
+      tabindex="-1"
+      aria-labelledby="feedbackModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="feedbackModalLabel">
+              Create Feedback Question
+            </h5>
+          </div>
+          <div class="modal-body">
+            <form id="modalFeedbackForm">
+              <div class="mb-3">
+                <label for="modalFeedback" class="form-label"
+                  >Feedback Question</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="modalFeedback"
+                  required
+                />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary" id="modalSubmitBtn">
+              Add Feedback Question
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
-  </main>
-  <script src="../../resources/jquery/jquery-3.7.1.min.js"></script>
-  <script src="../../resources/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="../../app/Feedback-System/Feedback-System.js"></script>
-</body>
+    <script src="../../resources/jquery/jquery-3.7.1.min.js"></script>
+    <script src="../../resources/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../../app/Feedback-System/Feedback-System.js"></script>
+  </body>
 </html>
