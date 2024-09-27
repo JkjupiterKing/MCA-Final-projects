@@ -61,9 +61,9 @@ public class ProjectController {
         existingProject.setStatus(updatedProject.getStatus());
         existingProject.setTitle(updatedProject.getTitle());
         existingProject.setDescription(updatedProject.getDescription());
+        existingProject.setProgress(updatedProject.getProgress());
         return projectRepo.save(existingProject);
     }
-
 
     @GetMapping("/byusername/{username}")
     public ResponseEntity<List<Project>> getProjectsByUsername(@PathVariable String username) {

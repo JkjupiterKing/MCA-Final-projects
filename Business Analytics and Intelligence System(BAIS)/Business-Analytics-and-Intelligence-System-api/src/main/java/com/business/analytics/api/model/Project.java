@@ -32,4 +32,6 @@ public class Project {
     @ManyToOne
     @JoinColumn(name = "username", referencedColumnName = "username")
     private User user;
+
+    private Integer Progress;
 }

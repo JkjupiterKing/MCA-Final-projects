@@ -3,6 +3,7 @@ let currentPage = 1;
 let totalPages = 0;
 let allUsers;
 let allRoles;
+let allManagers;
 let addUserForm;
 
 $("#mySidenav").load("../../app/sidebar/sidebar.html");
@@ -10,6 +11,7 @@ $("#mySidenav").load("../../app/sidebar/sidebar.html");
 document.addEventListener("DOMContentLoaded", function () {
   fetchUsers();
   fetchAllRoles();
+  fetchManagers();
 
   window.gotoPage = function (pageNumber) {
     currentPage = pageNumber;
@@ -92,6 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
         role: updatedRoleObject,
         address: formData.get("updateAddress"),
         salary: formData.get("updateSalary"),
+        manager: formData.get("updatemanager"),
       };
       updateUser(userData);
     });
@@ -164,6 +167,42 @@ function fetchUsers() {
   xhr.send();
 }
 
+// Function to fetch managers and populate dropdowns
+function fetchManagers() {
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "http://localhost:8080/users/all");
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      allManagers = JSON.parse(xhr.responseText).filter(
+        (user) => user.role.roleId === 2
+      ); // Filter for Managers
+      populateManagerDropdowns();
+    } else {
+      console.error("Error fetching users:", xhr.statusText);
+    }
+  };
+  xhr.onerror = function () {
+    console.error("Request failed");
+  };
+  xhr.send();
+}
+
+// Function to populate manager dropdowns in both forms
+function populateManagerDropdowns() {
+  var managerDropdown = document.getElementById("manager");
+  var updateManagerDropdown = document.getElementById("updatemanager");
+
+  if (managerDropdown && updateManagerDropdown) {
+    allManagers.forEach(function (manager) {
+      var option = document.createElement("option");
+      option.value = manager.username;
+      option.textContent = manager.username;
+      managerDropdown.appendChild(option);
+      updateManagerDropdown.appendChild(option.cloneNode(true));
+    });
+  }
+}
+
 // Function to display users for the current page
 function displayUsers(users) {
   console.log("users", users);
@@ -200,6 +239,9 @@ function displayUsers(users) {
       "</td>" +
       "<td>" +
       user.salary +
+      "</td>" +
+      "<td>" +
+      user.manager +
       "</td>" +
       "<td>" +
       '<button type="button" class="btn btn-primary btn-sm btn-update" data-user-id="' +
@@ -247,6 +289,7 @@ function addUser() {
     address: formData.get("address"),
     salary: formData.get("salary"),
     password: "password123",
+    manager: formData.get("manager"),
   };
 
   var xhr = new XMLHttpRequest();
@@ -354,6 +397,7 @@ function openUpdateForm(userId) {
   document.getElementById("updatePhone").value = user.phone;
   document.getElementById("updateAddress").value = user.address;
   document.getElementById("updateSalary").value = user.salary;
+  document.getElementById("updatemanager").value = user.manager;
 
   // Populate role dropdown and set the current role as selected
   var selectDropdown = document.getElementById("updaterole");

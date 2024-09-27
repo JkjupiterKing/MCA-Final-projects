@@ -61,6 +61,7 @@ public class UserController {
             existingUser.setPhone(updatedUser.getPhone());
             existingUser.setAddress(updatedUser.getAddress());
             existingUser.setSalary(updatedUser.getSalary());
+            existingUser.setManager(updatedUser.getManager());
 
             // Update role only if the roleId is provided in the updatedUser object
             if (updatedUser.getRole() != null && updatedUser.getRole().getRoleId() != null) {
@@ -82,6 +83,11 @@ public class UserController {
             // Update salary if provided
             if (updatedUser.getSalary() != null) {
                 existingUser.setSalary(updatedUser.getSalary());
+            }
+
+            // Update Manager if provided
+            if (updatedUser.getManager() != null) {
+                existingUser.setManager(updatedUser.getManager());
             }
 
             User savedUser = userRepository.save(existingUser);

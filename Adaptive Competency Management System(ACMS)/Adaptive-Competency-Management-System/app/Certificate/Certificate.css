@@ -1,0 +1,75 @@
+@font-face {
+  font-family: "PT Sans";
+  src: url("../../resources/fonts/PTSans-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  background-color: #f4f7fa;
+  font-family: "PT Sans";
+}
+
+.certificate {
+  border: 10px solid #330066;
+  padding: 30px;
+  background-color: white;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  max-width: 800px;
+  margin: auto;
+}
+
+.logo {
+  max-width: 5em;
+  margin-bottom: 20px;
+}
+
+h1 {
+  color: #330066;
+  margin-bottom: 20px;
+  font-size: 2.5em;
+}
+
+.subtitle {
+  font-size: 1.2em;
+  color: #555;
+}
+
+h2 {
+  font-size: 2em;
+  font-weight: bold;
+  color: #333;
+}
+
+h3 {
+  font-size: 1.8em;
+  font-weight: normal;
+  color: #333;
+}
+
+.completion-date {
+  font-size: 1em;
+  color: #777;
+  margin: 20px 0;
+}
+
+.signature {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.signature-line {
+  width: 200px;
+  border-top: 2px solid #333;
+  margin: 0 auto 10px auto;
+}
+
+#printButton {
+  background-color: #330066;
+  border-color: #330066;
+  position: fixed;
+  margin-top: 20px;
+  margin-left: 28em;
+}

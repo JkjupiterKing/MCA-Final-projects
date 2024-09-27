@@ -76,6 +76,27 @@ h4 {
   font-size: 12px;
   display: inline-block;
 }
-p {
-  margin-left: 1.4em;
+.card-body {
+  padding: 1.5rem;
+}
+
+.progress {
+  height: 20px;
+  border-radius: 0.25rem;
+  margin-left: 1em; /* Space between text and progress bar */
+}
+
+.card {
+  border: 1px solid #e0e0e0;
+  border-radius: 0.5rem;
+}
+#Update-btn {
+  background-color: #001f3f;
+  border-color: #001f3f;
+  width: 10em;
+  margin-left: 55em;
+}
+#submit {
+  background-color: #001f3f;
+  border-color: #001f3f;
 }

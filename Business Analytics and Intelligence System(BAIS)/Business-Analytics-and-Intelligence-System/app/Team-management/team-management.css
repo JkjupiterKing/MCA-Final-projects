@@ -1,0 +1,26 @@
+@font-face {
+  font-family: "Mukta";
+  src: url("../../resources/fonts/Mukta-Medium.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+body {
+  font-family: "Mukta", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  margin-left: 295px;
+  margin-top: 1em;
+  font-family: "Mukta", sans-serif;
+}
+#searchInput {
+  width: 200px;
+  margin: 0 auto;
+  margin-right: 2em;
+}
+#DisplayTeamMembersList {
+  width: 100%;
+  margin: 0 auto;
+}

@@ -27,6 +27,7 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
+    private String manager;
 }
 
 

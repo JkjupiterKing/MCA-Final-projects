@@ -31,17 +31,57 @@
       <!-- Assigned Projects Section -->
       <div class="assigned-projects">
         <h4 class="mb-4">Assigned Projects</h4>
-        <div class="card-deck">
-          <!-- Project Card 1 -->
-          <div class="card">
-            <div class="card-body">
-              <h6 class="card-title" id="title"></h6>
-              <h6 class="card-text" id="Description"></h6>
-            </div>
-          </div>
+        <div class="card-deck" id="cardDeck">
+          <!-- Project cards will be populated here -->
         </div>
       </div>
     </main>
+
+    <!-- Modal for Updating Project Progress -->
+    <div
+      class="modal fade"
+      id="updateProgressModal"
+      tabindex="-1"
+      aria-labelledby="updateProgressLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="updateProgressLabel">
+              Update Project Progress
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="updateProgressForm">
+              <input type="hidden" id="projectId" />
+              <div class="mb-3">
+                <label for="projectProgress" class="form-label"
+                  >Project Progress (%)</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="projectProgress"
+                  min="0"
+                  max="100"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-primary" id="submit">
+                Update Progress
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
     <script src="../../resources/jquery/jquery-3.7.1.min.js"></script>
     <script src="../../resources/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../../app/User-dashboard/UserDashboard.js"></script>

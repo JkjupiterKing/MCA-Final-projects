@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Course Completion Certificate</title>
+    <link
+      href="../../resources/bootstrap/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link href="../../app/Certificate/Certificate.css" rel="stylesheet" />
+    <link
+      rel="icon"
+      href="../../resources/Images/competence-logo.gif"
+      type="image/x-icon"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <div class="certificate">
+        <img
+          src="../../resources/Images/competence-logo.gif"
+          alt="Logo"
+          class="logo"
+        />
+        <h1>Certificate of Completion</h1>
+        <p class="subtitle">This certifies that</p>
+        <h2 id="studentName">[Student Name]</h2>
+        <p class="subtitle">has successfully completed the course</p>
+        <h3 id="courseName">[Course Name]</h3>
+        <p class="completion-date">
+          Date of Completion: <span id="completionDate">[Completion Date]</span>
+        </p>
+      </div>
+      <button id="printButton" class="btn btn-primary btn-lg mt-4">
+        Print Certificate
+      </button>
+    </div>
+    <script src="../../resources/jquery/jquery-3.7.1.min.js"></script>
+    <script src="../../resources/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../../app/Certificate/Certificate.js"></script>
+  </body>
+</html>
